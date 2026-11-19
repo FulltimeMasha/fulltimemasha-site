@@ -1,0 +1,1142 @@
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:var(--t-body);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.04;text-wrap:balance;letter-spacing:-.022em}
+h1{font-size:var(--t-display);font-weight:900}
+h2{font-size:var(--t-h2);font-weight:900}
+h3{font-size:var(--t-h3);font-weight:800;line-height:1.14}
+h4{font-size:var(--t-h4);font-weight:800;line-height:1.3;letter-spacing:-.01em}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--ink);outline-offset:3px;border-radius:4px}
+::selection{background:var(--sky);color:var(--on-sky)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :focus-visible{outline-color:var(--butter)}}
+
+.mono{font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.lead{font-size:var(--t-lead);color:var(--ink-2);line-height:1.55;max-width:56ch}
+.muted{color:var(--ink-2)}
+.small{font-size:var(--t-small);line-height:1.5}
+
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+section{position:relative}
+.sec{padding-block:var(--section-y)}
+
+/* section heads: centred, with a small tag pill saying what the section is */
+.sec-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;margin:0 auto min(var(--block),4svh);max-width:48rem}
+.sec-head .lead{max-width:52ch}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:.45rem;margin-bottom:.15rem;
+  padding:.4rem .85rem .4rem .7rem;border-radius:999px;background:var(--blush-pop);color:var(--on-blush);
+  font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+}
+.sec-tag svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* every section tag is pink: a pop of colour in each section, even the cream-only ones */
+.sec-tag-ic{width:28px}
+.sec-tag-ic svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sec-tag-label{padding:0 .8rem;font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+
+/* brand-coloured cards keep their light-mode look in dark mode: inside them the neutral
+   colours point at the fixed brand-card palette. (Only the footer card inverts.) */
+.hero-card,.file,.stat,.about-card,.offer,.contact-card,.mosaic-card,.logo-card,.report,.testi,.legal-card,.faq-card{
+  --ink:var(--brand-ink);--ink-2:var(--brand-ink-2);--ink-3:var(--brand-ink-3);
+  --ground:var(--brand-paper);--ground-2:var(--brand-paper-2);--card:var(--brand-card);
+  --edge:var(--brand-ink);--hairline:var(--brand-hairline);--hairline-2:var(--brand-hairline-2);
+  color:var(--ink);   /* re-set so inherited text uses the card's ink, not the page's */
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  min-height:52px;padding:.85rem 1.5rem;
+  font-family:var(--f-display);font-weight:800;font-size:1rem;letter-spacing:-.01em;
+  border-radius:999px;background:var(--edge);color:var(--ground);
+  transition:transform .18s ease,box-shadow .18s ease;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.btn:active{transform:translateY(0)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--hairline)}
+.btn-ghost:hover{border-color:var(--ink);box-shadow:none}
+.btn-sm{min-height:44px;padding:.6rem 1.1rem;font-size:.9375rem}
+.btn .arw{transition:transform .18s ease}
+.btn:hover .arw{transform:translateX(3px)}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-head{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--ground) 84%,transparent);
+  border-bottom:1px solid transparent;
+  transition:background .25s ease,border-color .25s ease;
+}
+.site-head.stuck{background:color-mix(in srgb,var(--ground) 88%,transparent);border-bottom-color:var(--hairline-2)}
+.head-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.75rem}
+/* section menu. Laptops: links inline in the top bar, the section on screen gets a pink marker
+   (the stat numbers' swipe). Smaller screens: a Menu button opens the links in a panel under the bar,
+   with "Send me your brief" at the bottom. */
+.site-nav{display:flex;align-items:center;gap:clamp(1rem,2vw,1.75rem);margin-inline:auto}
+.site-nav a:not(.btn){position:relative;z-index:0;font-weight:600;font-size:.9375rem;color:var(--ink-2);text-decoration:none;padding-block:.5rem;transition:color .2s ease}
+.site-nav a:not(.btn):hover,.site-nav a[aria-current="true"]{color:var(--ink)}
+.site-nav a:not(.btn)::after{
+  content:"";position:absolute;z-index:-1;left:-.15em;right:-.15em;bottom:.45rem;height:.42em;border-radius:3px;
+  background:var(--blush-pop);transform:rotate(-1deg) scaleX(0);transform-origin:left center;transition:transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.site-nav a[aria-current="true"]::after{transform:rotate(-1deg) scaleX(1)}
+/* hover: the marker draws itself in under the link like a highlighter, in the softer pink, so the section you're
+   in (strong pink) still stands out */
+@media (hover:hover) and (min-width:1100px){
+  .site-nav a:not(.btn):hover::after{transform:rotate(-1deg) scaleX(1)}
+  .site-nav a:not(.btn):not([aria-current="true"])::after{background:var(--blush)}
+  .site-nav a:not(.btn):not([aria-current="true"]):hover{color:var(--ink)}
+}
+.nav-brief{display:none}
+.nav-toggle{display:none;align-items:center;gap:.5rem;min-height:44px;padding:.5rem .9rem;border-radius:999px;border:1.5px solid var(--hairline);font-family:var(--f-display);font-weight:800;font-size:.9375rem;color:var(--ink)}
+.nav-toggle-ic,.nav-toggle-ic::before,.nav-toggle-ic::after{display:block;width:16px;height:2px;border-radius:2px;background:currentColor;transition:transform .25s ease,opacity .2s ease}
+.nav-toggle-ic{position:relative}
+.nav-toggle-ic::before,.nav-toggle-ic::after{content:"";position:absolute;left:0}
+.nav-toggle-ic::before{top:-5px}
+.nav-toggle-ic::after{top:5px}
+.nav-open .nav-toggle-ic{background:transparent}
+.nav-open .nav-toggle-ic::before{transform:translateY(5px) rotate(45deg)}
+.nav-open .nav-toggle-ic::after{transform:translateY(-5px) rotate(-45deg)}
+@media (max-width:1099px){
+  .nav-toggle{display:inline-flex}
+  .head-in{gap:.6rem}
+  .head-brief{margin-left:auto}
+  .site-nav{
+    display:none;position:absolute;top:100%;left:0;right:0;margin:0;
+    flex-direction:column;align-items:stretch;gap:0;padding:.5rem var(--gutter) 1.25rem;
+    background:var(--ground);border-bottom:1px solid var(--hairline);box-shadow:var(--shadow);
+  }
+  .nav-open .site-nav{display:flex}
+  .site-nav a:not(.btn){font-family:var(--f-display);font-weight:800;font-size:1.25rem;color:var(--ink);padding-block:.7rem;border-bottom:1px solid var(--hairline-2)}
+  /* in the panel the marker is a pink dot at the end of the row */
+  .site-nav a:not(.btn)::after{left:auto;right:.25rem;top:50%;bottom:auto;width:10px;height:10px;border-radius:50%;transform:translateY(-50%) scale(0)}
+  .site-nav a[aria-current="true"]::after{transform:translateY(-50%) scale(1)}
+}
+/* phones: no room for the brief button next to the name and Menu, so it moves into the menu panel */
+@media (max-width:759px){
+  .head-brief{display:none}
+  .nav-toggle{margin-left:auto}
+  .nav-brief{display:inline-flex;margin-top:1rem;align-self:flex-start}
+}
+.wordmark{display:flex;align-items:baseline;gap:.45rem;font-family:var(--f-display);font-weight:900;font-size:1.0625rem;letter-spacing:-.03em;text-decoration:none}
+.wordmark .sep{color:var(--ink-3);font-weight:600}
+.wordmark .role{font-family:var(--f-mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+@media (max-width:520px){.wordmark .sep,.wordmark .role{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+/* the hero is a card inset from the page edges, like the footer card */
+/* size L: full width minus --inset */
+.hero{position:relative;z-index:2;padding:var(--inset) var(--inset) 0;overflow-x:clip}   /* safety net: nothing in the hero may cause sideways scrolling (clip, not hidden — the video still bleeds out below) */
+.hero-card{background:var(--butter-soft);color:var(--ink);border-radius:var(--r-xl);padding-top:clamp(2rem,5vw,3.5rem)}
+.hero-grid{
+  position:relative;z-index:2;
+  display:grid;gap:clamp(1.75rem,4vw,3.5rem);
+  grid-template-columns:1fr;
+  padding-bottom:clamp(1.5rem,4vw,4rem);
+}
+.hero-copy{display:flex;flex-direction:column;gap:1.4rem;align-items:flex-start;order:2}
+.hero-stage{order:1;position:relative;z-index:3;justify-self:center;width:min(300px,78vw)}
+@media (min-width:880px){
+  /* fill the landing screen below the sticky header */
+  .hero-card{min-height:calc(100svh - 4.25rem - 2 * var(--inset));display:flex;flex-direction:column;justify-content:center;padding-top:clamp(1.5rem,4vh,3rem)}
+  /* the blue is painted 24px shorter than the card's box, so the visible card ends higher
+     while the layout (headline, video, next section) stays exactly where it was */
+  .hero-card{position:relative;background:none}
+  .hero-card::before{content:"";position:absolute;inset:0 0 24px 0;z-index:0;background:var(--butter-soft);border-radius:var(--r-xl)}
+  .hero-grid{grid-template-columns:1.05fr .95fr;align-items:end}
+  .hero-copy{order:1;align-self:stretch;padding-top:clamp(14px,3vw,26px);padding-bottom:clamp(1rem,3vw,3rem)}
+  .hero-copy .hero-actions{margin-top:auto}
+  .hero-stage{order:2;justify-self:end;margin-bottom:calc(-1 * var(--bleed));width:min(430px,100%,calc((100svh - 6rem) * 9 / 16))}
+}
+.hero h1 em{font-style:normal;position:relative;white-space:nowrap}
+/* equal spacing between every headline line, however the lines wrap */
+/* the headline uses the footer name's style: heaviest weight, tight tracking */
+.hero h1{font-size:clamp(3.4rem,8.4vw,7.6rem);letter-spacing:-.05em;line-height:.9}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.6rem;padding-top:clamp(1rem,2vw,1.9rem)}
+.btn-ig svg{width:18px;height:18px;flex:none}
+/* hero "View my work": the saturated blush, dark text */
+.btn-pink{background:var(--blush-pop);color:var(--ink)}
+/* headline (and the subtext under it) sit a little lower; the button stays pinned at the bottom */
+@media (min-width:880px){
+  .hero h1{margin-top:clamp(1rem,2.5vw,2.25rem)}
+  /* desktop: the headline is sized to its column, so "Hi, I'm" nearly fills the width */
+  .hero-copy{container-type:inline-size}
+  .hero h1{font-size:min(36cqi,11.75rem)}
+}
+.hero .hero-sub{max-width:44ch;margin-top:clamp(.5rem,1.4vw,1.25rem)}
+.hero h1 em::after{
+  content:"";position:absolute;left:-.04em;right:-.04em;bottom:.08em;height:.2em;
+  background:var(--blush-pop);z-index:-1;border-radius:3px;
+  transform:rotate(-.6deg);
+}
+.hero h1{position:relative;z-index:0}
+
+/* status pill hangs off the top-left of the stage */
+.status-pill{
+  position:absolute;top:clamp(14px,3vw,26px);left:-18px;z-index:4;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.5rem .9rem .5rem .75rem;border-radius:999px;
+  background:var(--blush);color:var(--on-blush);
+  box-shadow:var(--shadow);border:1px solid var(--hairline-2);
+}
+@media (max-width:400px){.status-pill{left:-10px}}
+.rec{width:9px;height:9px;border-radius:50%;background:var(--blush-deep);flex:none;position:relative}
+.rec::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--blush-deep);opacity:.5;animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.35);opacity:0}}
+
+/* ============================================================
+   VIDEO SLOT  (replace .slot-fill with <video>)
+   ============================================================ */
+.slot{
+  position:relative;width:100%;aspect-ratio:9/16;border-radius:var(--r-lg);
+  overflow:hidden;background:var(--ground-2);
+  border:1px solid var(--hairline);box-shadow:var(--shadow);
+  display:block;
+}
+.slot-fill{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(120% 80% at 20% 0%,color-mix(in srgb,var(--butter) 70%,transparent),transparent 60%),
+    radial-gradient(120% 90% at 85% 100%,color-mix(in srgb,var(--blush) 80%,transparent),transparent 62%),
+    linear-gradient(160deg,var(--ground),var(--ground-2));
+}
+video.slot-fill,img.slot-fill{width:100%;height:100%;object-fit:cover;display:block}
+.slot-fill::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(115deg,rgba(255,255,255,.14) 0 2px,transparent 2px 7px);
+  mix-blend-mode:overlay;opacity:.6;
+}
+.slot-note{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  text-align:center;color:var(--ink-2);width:min(86%,200px);
+  display:flex;flex-direction:column;gap:.45rem;align-items:center;
+}
+.slot-note .ring{
+  width:46px;height:46px;border-radius:50%;border:1.5px dashed currentColor;opacity:.55;
+  display:grid;place-items:center;font-size:1.1rem;line-height:1;
+}
+/* white rim around the reel, like the floating stills and gallery photos */
+.hero-stage .slot{border:clamp(4px,1vw,6px) solid var(--card);border-radius:clamp(26px,3vw,36px)}   /* rounder than the spec cards */
+.hero-stage .slot,.clip-layer{transform:rotate(3.2deg);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.hero-stage:hover .slot,.hero-stage:hover .clip-layer{transform:rotate(1.4deg)}
+
+/* two small rounded stills floating beside the reel, drifting like the About tags */
+.float-still{
+  position:absolute;z-index:3;width:clamp(96px,36%,156px);aspect-ratio:4/5;object-fit:cover;
+  border-radius:clamp(18px,2vw,26px);border:3px solid var(--card);box-shadow:var(--shadow);
+  animation:drift 8s ease-in-out infinite;pointer-events:none;
+}
+.still-1{left:-22%;top:26%}   /* level with the name in the headline */
+.still-2{right:-17%;bottom:20%;animation-duration:9.5s;animation-delay:-4s}
+/* narrower laptops/tablets: the right still sits further in so it never touches the screen edge */
+@media (min-width:880px) and (max-width:1199px){.still-2{right:-9%}}
+@media (max-width:879px){.still-1{left:-9%}.still-2{right:-7%}}
+
+/* paperclip on the hero video — its open gap sits on the top edge.
+   It lives outside .slot, so swapping the slot for a <video> keeps the clip. */
+.clip-layer{position:absolute;inset:0;z-index:2;pointer-events:none}
+.clip{
+  position:absolute;top:0;right:14%;width:clamp(34px,12%,52px);height:auto;overflow:visible;
+  transform:translateY(-27%);
+  fill:none;stroke:var(--clip);stroke-width:5.5;stroke-linecap:round;
+  filter:drop-shadow(0 2px 2px var(--clip-shadow));
+}
+.clip .clip-hi{stroke:var(--clip-hi);stroke-width:1.6;transform:translate(-1.1px,-.4px)}
+
+.slot-shade{position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,rgba(12,10,18,.68));z-index:2}
+.slot-play{
+  position:absolute;left:14px;bottom:14px;z-index:4;
+  width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);color:#16141c;
+  display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.28);
+  transition:transform .18s ease;
+}
+.slot-play:hover{transform:scale(1.07)}
+.slot-play{transition:transform .18s ease,opacity .2s ease}
+/* phones: a smaller play button so it covers less of the footage. Below the usual 44px tap size on purpose —
+   the whole video is the tap target (a tap anywhere plays/pauses), so the button is only a visual cue */
+@media (max-width:759px){.slot-play{width:34px;height:34px;left:10px;bottom:10px;font-size:.8rem}}
+/* hidden while the video plays so it covers nothing; keyboard focus still reveals it */
+[data-player]{cursor:pointer}   /* the whole video is clickable: play / pause */
+.is-playing .slot-play:not(:focus-visible){opacity:0;pointer-events:none}
+
+/* ============================================================
+   WORK RAIL
+   ============================================================ */
+.work{z-index:1;overflow-x:clip}
+/* desktop: the hero video bleeds into this section, so the heading clears it */
+/* the hero keeps the room its bleeding video needs below it, so the spacing stays right
+   whichever section comes next (sections can be switched off) */
+@media (min-width:880px){.hero{margin-bottom:calc(var(--bleed) * 1.1)}}
+
+/* the file (size M: the page column): a slightly tilted, flat "digital" folder,
+   like an app icon — back panel with the tabs, lighter front panel on top.
+   Its bottom-right corner hangs into the next section. */
+.file{
+  --folder-top:color-mix(in srgb,var(--folder) 62%,var(--card));
+  position:relative;
+  transform:rotate(1.2deg);
+}
+/* back panel: a darker strip showing above the front, like the back of a folder icon */
+.file::before{
+  content:"";position:absolute;z-index:0;
+  top:calc(44px - .9rem);left:0;right:0;bottom:1rem;
+  background:var(--folder-tab-2);border-radius:var(--r-xl);
+}
+
+/* tabs sit edge to edge; neighbours alternate shade, the open one joins the front panel */
+.tabs{display:flex;align-items:flex-end;position:relative;z-index:1}
+.tab{
+  position:relative;z-index:1;
+  padding:.7rem 1.15rem;border-radius:var(--r-md) var(--r-md) 0 0;
+  font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  background:var(--folder-tab);color:var(--on-folder);
+  min-height:44px;transition:background .18s ease,padding .18s ease;
+}
+@media (max-width:520px){.tab{padding-inline:.7rem;letter-spacing:.08em;white-space:nowrap}}
+.tab:nth-child(even){background:var(--folder-tab-2)}
+.tab[aria-selected="true"]{
+  z-index:3;background:var(--folder-top);
+  padding-top:.95rem;margin-bottom:-1px;padding-bottom:calc(.7rem + 1px);
+  box-shadow:inset 0 1px 0 var(--folder-shine);
+}
+.tab:not([aria-selected="true"]):hover{background:color-mix(in srgb,var(--folder-tab) 55%,var(--folder))}
+
+/* front panel: smooth gradient, crisp highlight along the top edge, soft shadow */
+.folder{
+  position:relative;z-index:2;
+  background:linear-gradient(180deg,var(--folder-top),var(--folder) 45%);
+  border-radius:0 var(--r-xl) var(--r-xl) var(--r-xl);
+  --folder-pad:clamp(1rem,2.2vw,1.75rem);
+  padding:min(clamp(1.6rem,3.4vw,2.75rem),3.2svh) var(--folder-pad);
+  box-shadow:inset 0 1px 0 var(--folder-shine),var(--shadow-lift);
+}
+/* the rail runs edge to edge of the folder, so a cut-off card shows there's more */
+.rail-wrap{position:relative;z-index:1;margin-inline:calc(-1 * var(--folder-pad))}
+.rail{
+  --rail-gap:var(--card-gap);
+  display:grid;grid-auto-flow:column;grid-auto-columns:clamp(200px,74%,280px);
+  gap:var(--rail-gap);
+  overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;scrollbar-width:none;
+  padding:.5rem var(--folder-pad) 1rem;margin-block:-.5rem -1rem;
+  scroll-padding-inline:var(--folder-pad);
+}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{scroll-snap-align:start}
+.rail>:last-child{scroll-snap-align:end}
+/* desktop: three and a bit cards in view, same size whatever the filter */
+/* desktop: ~4 cards in view, but never so tall that the heading, videos and CTA stop fitting one screen */
+@media (min-width:760px){.rail{grid-auto-columns:min(calc((100% + var(--folder-pad) - 3 * var(--rail-gap)) / 4.1),calc((100svh - var(--rail-overhead,470px)) * 9 / 16))}}
+
+/* chevrons appear only when there is more to scroll that way */
+.rail-nav{
+  position:absolute;top:50%;translate:0 -50%;z-index:5;
+  width:48px;height:48px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--card);color:var(--ink);
+  border:1px solid var(--hairline);box-shadow:var(--shadow-lift);
+  transition:transform .18s ease;
+}
+.rail-nav:hover{transform:scale(1.08)}
+.rail-nav svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+/* phones: no ‹ › chevrons — people swipe the rows instead */
+@media (max-width:759px){.rail-nav{display:none !important}}
+.rail-next{right:calc(var(--folder-pad) + .5rem)}
+.rail-prev{left:calc(var(--folder-pad) + .5rem)}
+.vcard{position:relative;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.vcard:hover{transform:translateY(-6px)}
+.vcard .slot{aspect-ratio:9/16}
+.tag{
+  position:absolute;top:12px;left:12px;z-index:4;
+  padding:.32rem .6rem;border-radius:999px;
+  background:rgba(255,255,255,.92);color:#16141c;
+  font-family:var(--f-mono);font-size:.625rem;letter-spacing:.13em;text-transform:uppercase;font-weight:500;
+}
+.vcard-title{position:absolute;left:14px;right:14px;bottom:14px;z-index:4;text-align:right;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+/* play button sits bottom-left (the base .slot-play position), out of the way of the footage;
+   the title keeps clear of it */
+.vcard .vcard-title{left:66px}
+@media (max-width:759px){.vcard .vcard-title{left:54px}}   /* clears the smaller phone play button */
+/* timeline: appears when the play button hides (while playing). A faint white line that fills with solid
+   white as the video plays; tap or drag it to jump around. The hit area is taller than the line for fingers. */
+.scrub{
+  position:absolute;left:14px;right:14px;bottom:4px;height:24px;z-index:5;
+  display:flex;align-items:center;cursor:pointer;touch-action:none;
+  opacity:0;pointer-events:none;transition:opacity .2s ease;
+}
+.scrub::before{content:"";position:absolute;left:0;right:0;height:3px;border-radius:3px;background:var(--scrub-track)}
+.scrub-fill{position:relative;height:3px;border-radius:3px;background:var(--scrub-fill);width:0}
+.scrub-fill::after{content:"";position:absolute;right:-5px;top:50%;width:10px;height:10px;border-radius:50%;background:var(--scrub-fill);translate:0 -50%;scale:0;transition:scale .15s ease}
+.scrub:hover .scrub-fill::after,.scrub.dragging .scrub-fill::after,.scrub:focus-visible .scrub-fill::after{scale:1}
+.scrub:hover::before,.scrub.dragging::before{height:5px}
+.scrub:hover .scrub-fill,.scrub.dragging .scrub-fill{height:5px}
+.is-playing .scrub{opacity:1;pointer-events:auto}
+/* hero reel: with a mouse, its timeline only shows while hovering over the playing video
+   (touch screens have no hover, so there it stays visible while playing) */
+@media (hover:hover){
+  .hero-stage .is-playing .scrub{opacity:0;pointer-events:none}
+  .hero-stage .is-playing:hover .scrub,.hero-stage .scrub.dragging,.hero-stage .scrub:focus-visible{opacity:1;pointer-events:auto}
+}
+.vcard .vcard-title{transition:translate .2s ease}
+.vcard .is-playing .vcard-title{translate:0 -14px}   /* lifts clear of the timeline */
+
+/* ============================================================
+   STATS — three tilted cards
+   ============================================================ */
+/* top padding clears the folder corner that hangs into this section */
+.stats-strip{overflow-x:clip}
+.stats{
+  display:grid;gap:var(--card-gap);
+  grid-template-columns:1fr;
+}
+@media (min-width:720px){.stats{grid-template-columns:repeat(3,1fr);align-items:start}}
+.stat{
+  position:relative;border-radius:var(--r-xl);padding:clamp(1.4rem,2.6vw,1.9rem);
+  box-shadow:var(--shadow);border:1px solid var(--hairline-2);
+  display:flex;flex-direction:column;gap:.35rem;margin:0;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s ease;
+}
+.stat:hover{transform:rotate(0deg) translateY(-6px) !important;box-shadow:var(--shadow-lift)}
+.stat{background:var(--card);color:var(--ink)}
+.stat:nth-child(odd){background:var(--butter-soft)}
+.stat:nth-child(even){background:var(--blush-soft)}
+/* marker swipe behind each number, like "three seconds" in the hero */
+.stat-n{position:relative;z-index:0;align-self:flex-start}
+.stat-n::after{content:"";position:absolute;left:-.06em;right:-.06em;bottom:.04em;height:.36em;z-index:-1;border-radius:3px;background:var(--butter-pop);transform:rotate(-.8deg)}
+.stat:nth-child(even) .stat-n::after{background:var(--blush-pop)}
+.stat:nth-child(3){background:var(--sky-soft)}
+.stat:nth-child(3) .stat-n::after{background:var(--sky)}
+.stat:nth-child(1){transform:rotate(-2.4deg)}
+.stat:nth-child(2){transform:rotate(1.6deg) translateY(18px)}
+.stat:nth-child(3){transform:rotate(-1.2deg) translateY(6px)}
+.stat-n{font-family:var(--f-display);font-weight:900;font-size:var(--t-stat);line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.stat-l{font-weight:600;font-size:1.0625rem;line-height:1.3}
+.stat-src{font-family:var(--f-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;opacity:.72;margin-top:.5rem;line-height:1.6}
+/* button under the stat cards: straight to her Instagram */
+.proof-cta{display:flex;justify-content:center;margin-top:calc(var(--block) + 18px)}  /* +18px clears the lowered middle card */
+
+/* the screenshot: proof for the number above it */
+.shot{
+  position:relative;display:block;width:100%;height:auto;aspect-ratio:4/5;max-height:max(180px,calc(100svh - 590px));margin-block:.9rem .15rem;
+  border-radius:var(--r-md);overflow:hidden;object-fit:cover;object-position:bottom;
+  background:var(--card);border:1px solid var(--hairline);box-shadow:var(--shadow);
+}
+div.shot .slot-note{color:var(--ink-3)}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+/* the photo pokes out above the card by --poke; the section adds that to its top padding
+   so the spacing between sections stays consistent */
+.about,.contact{--poke:clamp(2rem,5vw,4.5rem);padding-top:calc(var(--section-y) + var(--poke))}
+.about-card{
+  position:relative;
+  padding:clamp(1.5rem,4.5vw,4rem);
+}
+/* only the background card tilts; the photo and text stay straight */
+.about-card::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--butter-soft);border-radius:var(--r-xl);
+  transform:rotate(-1.5deg);
+}
+.about .wrap{position:relative;z-index:0}
+.about-card .portrait-wrap{align-self:start;width:min(540px,100%,calc((100svh - 170px) * .8));margin-top:calc(-1 * var(--poke) - clamp(1.5rem,4.5vw,4rem))}
+.about-grid{display:grid;gap:clamp(1.75rem,4vw,3.5rem);grid-template-columns:1fr;align-items:center}
+@media (min-width:820px){
+  .about-grid{grid-template-columns:1.1fr .9fr}
+  /* text sits in the middle of the card, beside the photo */
+  .about-body{align-self:center}
+  .about-body .facts{margin-top:clamp(.75rem,2.5vw,2.25rem)}
+}
+.portrait-wrap{position:relative;width:min(460px,90%);margin-inline:auto}
+/* the photo is cut to an uneven, hand-trimmed shape; the shadow sits on the wrapper
+   because clip-path would cut it off */
+.portrait-cut{filter:drop-shadow(0 14px 22px var(--cutout-shadow))}
+.portrait{
+  position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;
+  clip-path:url(#cut-shape);
+  background:
+    radial-gradient(90% 70% at 30% 20%,color-mix(in srgb,var(--card) 60%,transparent),transparent 62%),
+    linear-gradient(150deg,var(--blush),var(--ground-2));
+  display:grid;place-items:center;
+}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+/* a strip of washi tape holding the photo to the page */
+.tape{
+  position:absolute;z-index:2;top:-4%;left:50%;width:38%;height:auto;
+  translate:-50% 0;rotate:-4deg;pointer-events:none;
+  filter:drop-shadow(0 1px 2px var(--cutout-shadow));
+}
+/* the washi tape itself, drawn in CSS (no image): cream paper with torn ends, two soft creases and faint fibres */
+.tape,.testi-tape{display:block;aspect-ratio:3/1}
+/* drawn on an inner layer, so the torn-edge cut-out doesn't also cut away the tape's shadow */
+.tape::before,.testi-tape::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(104deg,transparent 29%,var(--tape-crease) 34%,transparent 40%),
+    linear-gradient(74deg,transparent 62%,var(--tape-crease) 67%,transparent 73%),
+    repeating-linear-gradient(0deg,var(--tape-fibre) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(90deg,var(--tape-fibre) 0 1px,transparent 1px 4px),
+    var(--tape);
+  clip-path:polygon(2% 0,98% 0,99.5% 9%,97.5% 19%,100% 30%,98% 41%,99.6% 52%,97.2% 63%,99.4% 74%,97.8% 86%,99.2% 100%,
+                    1.5% 100%,0% 89%,2.4% 78%,0.4% 66%,2.8% 55%,0.6% 43%,2.2% 31%,0% 20%,2.6% 9%);
+}
+.pin{
+  position:absolute;z-index:3;display:inline-flex;align-items:center;gap:.45rem;
+  padding:.55rem 1rem;border-radius:999px;
+  box-shadow:var(--shadow);border:1px solid var(--hairline-2);
+  font-size:var(--t-small);font-weight:600;text-decoration:none;min-height:44px;
+  transition:transform .2s ease;
+  animation:drift 7s ease-in-out infinite;
+}
+.pin:hover{transform:scale(1.05)}
+.pin svg{width:18px;height:18px;flex:none}
+.pin-handle{left:-6%;bottom:9%;background:var(--blush);color:var(--blush-deep)}
+.pin-count{right:-4%;top:14%;background:var(--card);color:var(--ink);animation-duration:8.5s;animation-delay:-3s}
+.pin b{font-weight:800}
+/* the pills float slightly, like they're drifting over the photo */
+@keyframes drift{
+  0%,100%{translate:0 0;rotate:-1.5deg}
+  33%{translate:5px -7px;rotate:1deg}
+  66%{translate:-4px -3px;rotate:-.5deg}
+}
+.about-body{display:flex;flex-direction:column;gap:1.1rem;align-items:flex-start}
+.statement{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.28;letter-spacing:-.018em}
+.facts{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{
+  display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .95rem;border-radius:999px;
+  background:var(--card);color:var(--ink);   /* white chips on the cream card */
+  font-family:var(--f-body);font-size:.875rem;font-weight:600;letter-spacing:0;
+}
+
+/* ============================================================
+   GALLERY — a sideways row of photo cards
+   ============================================================ */
+.gallery{overflow-x:clip}
+/* the gallery is a mosaic on a dark card (size M); columns 2 and 4 sit lower,
+   so the top and bottom edges are staggered rather than straight */
+.mosaic-card{background:var(--edge);border-radius:var(--r-xl);padding:clamp(.75rem,1.6vw,1.25rem);overflow:clip}  /* clip, not hidden: hidden would make the card the scroll area for the tile animation */
+/* two rows that scroll sideways together. Every photo in a row has the same height and keeps its own
+   shape; the row height follows the screen so the whole section fits one screen. Row 2 is offset. */
+.mosaic{
+  --mrow-h:clamp(170px,calc((100svh - 330px) / 2),330px);
+  display:flex;flex-direction:column;gap:var(--card-gap);
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;
+}
+.mosaic::-webkit-scrollbar{display:none}
+.mrow{display:flex;gap:var(--card-gap);width:max-content}
+.mrow:nth-child(2){margin-left:clamp(2rem,5vw,4rem)}
+.mrow .mtile{height:var(--mrow-h);flex:none;scroll-snap-align:start}
+/* playful heights: each shape has its own height (width follows its aspect ratio).
+   The top row sits on its bottom edge and the bottom row hangs from its top edge,
+   so the outer edges zigzag while the middle stays tidy. */
+.mrow:first-child{align-items:flex-end}
+.mrow:nth-child(2){align-items:flex-start}
+.mrow{height:var(--mrow-h)}
+.mrow .m-port{height:calc(var(--mrow-h) * .84)}
+.mrow .m-sq{height:calc(var(--mrow-h) * .72)}
+.mrow .m-land{height:calc(var(--mrow-h) * .64)}
+/* while the gallery or the page scrolls, the photos tilt a little and float back (main.js sets --tilt) */
+.mosaic{padding-block:12px;margin-block:-12px}   /* room for tilted corners, layout unchanged */
+.mrow .mtile{--d:1;rotate:calc(var(--tilt,0) * var(--d) * 1deg);translate:0 calc(var(--tilt,0) * var(--d) * -1.5px);will-change:rotate}
+.mrow .mtile:nth-child(even){--d:-.7}
+.mrow .mtile:nth-child(3n){--d:.5}
+@media (max-width:759px){.mosaic{--mrow-h:200px}}
+.mosaic-card{position:relative}
+.mosaic-card .rail-prev{left:clamp(1.25rem,2.4vw,2rem)}
+.mosaic-card .rail-next{right:clamp(1.25rem,2.4vw,2rem)}
+.mtile{position:relative;margin-inline:0;margin-top:0;border-radius:var(--r-md);overflow:hidden;background:var(--ground-2)}
+.mtile img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.mtile-link{display:block;height:100%;color:var(--on-photo);text-decoration:none;cursor:zoom-in}
+.mtile-link:hover img,.mtile-link:focus-visible img{transform:scale(1.05)}
+/* the name slides up over a soft shade on hover, like the spec work video cards */
+.mtile-link::after{content:"";position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(transparent,var(--scrim));opacity:0;transition:opacity .3s ease}
+.mtile-name{
+  position:absolute;right:12px;bottom:10px;z-index:1;
+  font-family:var(--f-display);font-weight:800;font-size:var(--t-h4);text-shadow:0 1px 8px var(--scrim);
+  opacity:0;translate:0 8px;transition:opacity .3s ease,translate .3s ease;
+}
+.mtile-link:hover::after,.mtile-link:focus-visible::after,.mtile-link:hover .mtile-name,.mtile-link:focus-visible .mtile-name{opacity:1;translate:0 0}
+@media (hover:none){.mtile-link::after,.mtile-name{opacity:1;translate:0 0}}
+
+/* lightbox */
+.lightbox{border:0;padding:0;background:none;max-width:min(92vw,1100px);max-height:92vh;overflow:visible}
+.lightbox::backdrop{background:var(--overlay)}
+.lightbox img{display:block;max-width:100%;max-height:84vh;border-radius:var(--r-md);box-shadow:var(--shadow-lift)}
+.lightbox-name{margin-top:.75rem;color:var(--on-photo);text-align:center}
+.lightbox-close{position:absolute;top:-14px;right:-14px;width:44px;height:44px;border-radius:50%;background:var(--card);color:var(--ink);box-shadow:var(--shadow);font-size:1rem}
+.m-tall{aspect-ratio:3/4.4}
+.m-port{aspect-ratio:4/5}
+.m-sq{aspect-ratio:1}
+.m-land{aspect-ratio:5/4}
+.gallery-foot{display:flex;justify-content:flex-end;margin-top:var(--block)}
+
+/* ============================================================
+   OFFER
+   ============================================================ */
+.offers{display:grid;gap:var(--card-gap);grid-template-columns:1fr;align-items:start}
+@media (min-width:860px){.offers{grid-template-columns:repeat(3,1fr)}}
+/* the middle card sits a little lower than the outer two (moved visually only, so nothing around it shifts) */
+@media (min-width:860px){
+  .offer:nth-child(2){--y:clamp(1.5rem,3vw,2.25rem);translate:0 var(--y)}
+  /* the add-ons keep their usual gap below the lowered card */
+  #offer .addons{margin-top:calc(var(--block) + clamp(1.5rem,3vw,2.25rem))}
+}
+.offer{
+  border-radius:var(--r-xl);padding:clamp(.5rem,1vw,.7rem) clamp(.5rem,1vw,.7rem) clamp(1rem,2vw,1.3rem);
+  display:flex;flex-direction:column;gap:.7rem;
+  border:1px solid var(--hairline-2);
+}
+/* hover: the card lifts and tips a little (like the stat cards), the photo zooms in slightly
+   and the quote arrow nudges. Uses transform, because translate is taken by the rise animation / middle-card drop. */
+.offer{transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s ease}
+.offer-img img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.offer-cta-ic svg{transition:transform .2s ease}
+@media (hover:hover){
+  .offer:hover{transform:translateY(-8px) rotate(-1.2deg);box-shadow:var(--shadow-lift)}
+  .offer:nth-child(2):hover{transform:translateY(-8px) rotate(1deg)}
+  .offer:nth-child(3):hover{transform:translateY(-8px) rotate(1.2deg)}
+  .offer:hover .offer-img img{transform:scale(1.05)}
+  .offer:hover .offer-cta-ic svg{transform:translateX(2px)}
+}
+.offer{background:var(--card);color:var(--ink)}
+.offer:nth-child(1){background:var(--blush-soft)}
+.offer:nth-child(3){background:var(--butter-soft)}
+.offer:nth-child(2) .offer-tag{background:var(--butter-pop);color:var(--on-butter)}
+.offer:nth-child(3) .offer-tag{background:var(--sky);color:var(--on-sky)}
+.offer:nth-child(3) .offer-cta-ic{background:var(--sky);color:var(--on-sky)}
+.offer:nth-child(2){background:var(--edge);color:var(--ground)}
+/* offer card: photo with a tag, title, "view details" drawer, then price + quote button */
+.offer>*:not(.offer-img){margin-inline:clamp(.5rem,1.2vw,.9rem)}
+.offer-img{position:relative;aspect-ratio:5/4;border-radius:calc(var(--r-xl) - .5rem);overflow:hidden;background:var(--ground-2)}
+.offer-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}  /* keeps faces in frame when short screens crop to 2:1 */
+.offer-tag{position:absolute;top:10px;right:10px;padding:.35rem .7rem;border-radius:999px;background:var(--blush-pop);color:var(--on-blush)}
+.offer h3{font-size:var(--t-h3)}
+.offer .spec p{font-size:var(--t-small);line-height:1.55;margin-bottom:.7rem}
+.offer .spec ul{display:flex;flex-direction:column;gap:.4rem;font-size:var(--t-small);margin-bottom:.9rem}
+.offer .spec li{display:flex;gap:.6rem;align-items:flex-start;line-height:1.45}
+.offer .spec li::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;margin-top:.5rem}
+.offer-foot{display:flex;align-items:center;justify-content:flex-start;gap:.75rem;margin-top:auto;padding-top:.4rem}
+.offer-cta{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem .35rem .3rem 1rem;border-radius:999px;background:var(--edge);color:var(--ground);font-family:var(--f-display);font-weight:800;font-size:.9375rem;text-decoration:none;transition:transform .18s ease}
+.offer-cta:hover{transform:translateY(-2px)}
+.offer-cta-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--blush-pop);color:var(--on-blush)}
+.offer-cta-ic svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+/* featured (dark) card flips its button */
+.offer:nth-child(2) .offer-cta{background:var(--ground);color:var(--ink)}
+.disc{padding-top:.6rem;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.disc summary{
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  cursor:pointer;list-style:none;font-weight:600;font-size:.9375rem;min-height:44px;
+}
+.disc summary::-webkit-details-marker{display:none}
+.disc .plus{
+  width:30px;height:30px;border-radius:50%;background:var(--card);color:var(--ink);
+  display:grid;place-items:center;flex:none;font-weight:700;line-height:1;
+  transition:transform .22s ease;
+}
+.disc[open] .plus{transform:rotate(45deg)}
+.spec{margin-top:.85rem;background:var(--card);border-radius:var(--r-md);padding:.9rem 1rem;color:var(--ink)}
+.spec dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.5rem .9rem;font-size:.8125rem}
+.spec dt{color:var(--ink-3);font-family:var(--f-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;padding-top:.2rem}
+.spec dd{margin:0;text-align:right;font-weight:600}
+.addons{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:var(--block)}
+.addon{
+  padding:.55rem 1rem;border-radius:999px;border:1.5px dashed var(--hairline);
+  color:var(--ink-2);font-size:var(--t-small);font-weight:500;min-height:44px;display:inline-flex;align-items:center;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-card{
+  background:var(--blush-soft);   /* same pink as the Single Video offer card */color:var(--ink);border-radius:var(--r-xl);
+  padding:clamp(1.5rem,4.5vw,4rem);
+}
+.contact-card .contact-shot{align-self:start;margin-top:calc(-1 * var(--poke) - clamp(1.5rem,4.5vw,4rem))}
+.contact-grid{display:grid;gap:clamp(1.75rem,4vw,3.25rem);grid-template-columns:1fr;align-items:center}
+@media (min-width:860px){.contact-grid{grid-template-columns:1.1fr .9fr}}
+.contact h2{font-size:clamp(2.35rem,6.4vw,4rem)}
+.contact-copy{display:flex;flex-direction:column;gap:1.2rem;align-items:flex-start;order:2}
+@media (min-width:860px){.contact-copy{order:1}}
+.contact-shot{order:1;position:relative;width:min(380px,100%);justify-self:center}
+@media (min-width:860px){.contact-shot{order:2;justify-self:end}}
+.contact-shot .frame{
+  position:relative;aspect-ratio:4/5;border-radius:var(--r-xl);overflow:hidden;
+  background:
+    radial-gradient(85% 70% at 70% 15%,color-mix(in srgb,var(--butter) 80%,transparent),transparent 60%),
+    linear-gradient(155deg,var(--ground-2),var(--card));
+  border:1px solid var(--hairline-2);box-shadow:var(--shadow-lift);
+  transform:rotate(2deg);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  display:grid;place-items:center;
+}
+.contact-shot:hover .frame{transform:rotate(0deg)}
+.contact-shot .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wave-note{
+  position:absolute;left:-14px;bottom:-14px;z-index:3;
+  background:var(--card);color:var(--ink);border-radius:var(--r-md);
+  padding:.7rem .95rem;box-shadow:var(--shadow);border:1px solid var(--hairline-2);
+  max-width:230px;
+}
+/* extra room above the email box so it doesn't crowd the subtext; the card grows to fit */
+/* "Let's create" line inside the spec work folder, under the videos: small and quiet */
+.work-cta{
+  position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;
+  margin-top:clamp(.7rem,1.3vw,.9rem);padding-top:clamp(.6rem,1.2vw,.8rem);border-top:1px solid var(--folder-edge);
+}
+.work-cta-line{font-size:var(--t-small);color:var(--on-folder)}
+.work-cta-line strong{font-family:var(--f-display);font-weight:800}
+.work-cta .mailbox{margin-top:0}
+#work .folder{padding-bottom:clamp(1rem,1.8vw,1.4rem)}
+.mailbox-sm{padding:.25rem .25rem .25rem .9rem;box-shadow:none;border:1px solid var(--folder-edge)}
+.mailbox-sm code{font-size:.75rem}
+.mailbox-sm .copy-btn{min-height:36px;padding:.4rem .85rem;font-size:.8125rem}
+.mailbox{margin-top:0;background:var(--butter-soft)}
+.mailbox{
+  margin-top:clamp(.75rem,2vw,1.5rem);
+  display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+  background:var(--card);color:var(--ink);border-radius:999px;
+  padding:.4rem .4rem .4rem 1.1rem;box-shadow:var(--shadow);
+}
+.mailbox code{
+  font-family:var(--f-mono);font-size:.875rem;letter-spacing:-.01em;user-select:all;
+}
+.copy-btn{
+  min-height:44px;padding:.55rem 1.05rem;border-radius:999px;background:var(--edge);color:var(--ground);
+  font-weight:700;font-size:.875rem;font-family:var(--f-display);white-space:nowrap;
+}
+.copy-btn.done{background:var(--blush-pop);color:var(--on-blush)}   /* "Copied": brand pink, not green */
+/* the email and its Copy button always stay on one line, in one pill: the address gets a bit smaller on phones,
+   and if a screen is ever too narrow it is shortened with "…" rather than pushing the button onto a new line */
+.mailbox{flex-wrap:nowrap;max-width:100%}
+.mailbox .mail-link,.mailbox > code{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mailbox .copy-btn{flex:none}
+@media (max-width:759px){
+  .mailbox{padding-left:.95rem;gap:.4rem}
+  .mailbox code{font-size:.78rem}
+}
+.reply{display:flex;align-items:center;gap:.5rem;color:inherit;opacity:.85}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+/* the footer is a rounded card inset from the page edges.
+   --edge and --ground both flip with the theme, so this pair stays legible in both */
+/* size L: full width minus --inset */
+.foot{padding:var(--inset)}
+.foot-card{
+  container-type:inline-size;
+  background:var(--edge);color:var(--ground);border-radius:var(--r-xl);overflow:clip;
+  padding:clamp(1.75rem,4vw,3.5rem) clamp(1.25rem,4.5vw,4rem) 0;
+  display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,5rem);
+}
+.foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem clamp(2rem,5vw,4rem)}
+.foot-cols{display:flex;flex-wrap:wrap;gap:1.5rem clamp(2rem,6vw,5rem)}
+.foot-col{display:flex;flex-direction:column;gap:.15rem;align-items:flex-start}
+.foot-col .mono{opacity:.6;margin-bottom:.35rem}
+.foot-mail{font-family:var(--f-mono);font-size:var(--t-small);user-select:all;min-height:44px;display:inline-flex;align-items:center}
+.foot-link{text-decoration:none;font-weight:600;font-size:var(--t-small);opacity:.92;transition:opacity .18s ease;min-height:44px;display:inline-flex;align-items:center;gap:.45rem}
+.foot-link svg{width:18px;height:18px;flex:none}
+.foot-link:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+
+.foot-side{display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem}
+@media (max-width:640px){.foot-side{align-items:flex-start}}
+.foot-actions{display:flex;flex-direction:column;align-items:stretch;gap:.6rem}
+.foot-pill{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:1.1rem;
+  min-height:44px;padding:.35rem .4rem .35rem 1.2rem;border-radius:999px;
+  font-family:var(--f-display);font-weight:800;font-size:.9375rem;text-decoration:none;
+  transition:transform .18s ease;
+}
+.foot-pill:hover{transform:translateY(-2px)}
+.foot-pill-brief{background:var(--butter-pop);color:var(--on-butter)}
+.foot-pill-ig{background:var(--blush);color:var(--on-blush)}
+.foot-pill-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--edge);color:var(--ground);flex:none}
+.foot-pill-ic svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.foot-legal{font-size:var(--t-small);opacity:.6}
+
+/* her name fills the width of the card and sits on its bottom edge */
+.foot-name{
+  margin:0;font-family:var(--f-display);font-weight:900;letter-spacing:-.05em;line-height:.8;
+  font-size:14.9cqi;white-space:nowrap;color:var(--foot-name);
+  padding-bottom:.06em;
+}
+.theme-toggle{
+  position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;
+  width:46px;height:46px;border-radius:50%;background:var(--card);color:var(--ink);
+  border:1px solid var(--hairline);box-shadow:var(--shadow);display:grid;place-items:center;
+  font-size:1.05rem;line-height:1;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .stat{transform:none !important}
+}
+
+/* ============================================================
+   STANDALONE SITE ADDITIONS
+   (these were provided by the preview wrapper; a real site needs them)
+   ============================================================ */
+img,video{max-width:100%;display:block}
+[hidden]{display:none !important}
+
+/* clear the notch on iPhones in landscape */
+.wrap{
+  padding-left:max(var(--gutter),env(safe-area-inset-left,0px));
+  padding-right:max(var(--gutter),env(safe-area-inset-right,0px));
+}
+
+/* anchor links land below the sticky header */
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:84px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ============================================================
+   BRAND LOGOS — a strip of client logos (switch: "logos")
+   ============================================================ */
+.logo-card{background:var(--butter-soft);border-radius:var(--r-xl);padding:clamp(1rem,2.4vw,1.75rem);box-shadow:var(--shadow);border:1px solid var(--hairline-2)}
+/* one row that drifts slowly by itself (main.js) and can also be scrolled/swiped sideways for a quicker look.
+   main.js repeats the logos so the row loops without an end. The edges fade out (the mask only uses
+   transparency, no colour). */
+.logo-strip{
+  list-style:none;margin:0;padding:0;display:flex;gap:var(--card-gap);
+  overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,black 7%,black 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,black 7%,black 93%,transparent);
+}
+.logo-strip::-webkit-scrollbar{display:none}
+.logo-slot{--logo-w:clamp(120px,15vw,180px);--logo-h:clamp(60px,7.5vw,90px);flex:none;width:var(--logo-w);height:var(--logo-h);display:flex;align-items:center;justify-content:center;border-radius:var(--r-md)}   /* fixed size: a big logo file can never stretch its box */
+/* every logo gets the same box and is scaled to fit inside it completely (never cropped): square badges are
+   limited by the height, wide wordmarks by the width, so they look about equally big. If one logo still looks
+   too small or too big, give its <img> style="--logo-scale:1.2" (or 0.85). Real logos sit freely on the card
+   (many brand logos come with their own tile); they're shown in grey so different colours sit calmly together. */
+.logo-slot img{
+  display:block;width:auto;height:auto;object-fit:contain;
+  max-width:calc(var(--logo-w) * .8 * var(--logo-scale,1));max-height:calc(var(--logo-h) * .7 * var(--logo-scale,1));
+  filter:grayscale(1);opacity:.8;
+}
+/* placeholder: an obviously empty grey box */
+.logo-ph{border-radius:var(--r-md);background:var(--ground-2);border:1.5px dashed color-mix(in srgb,var(--ink-3) 45%,transparent)}
+.logo-ph span{font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-align:center}
+
+/* ============================================================
+   CASE STUDIES — one "campaign report" at a time, clipped to the desk (switch: "cases")
+   ============================================================ */
+.testi-row{display:grid;gap:var(--card-gap);grid-template-columns:1fr;align-items:start}
+@media (min-width:860px){.testi-row{grid-template-columns:repeat(3,1fr)}}
+.cases{overflow-x:clip}
+/* pills to switch between reports; with only one report they hide themselves */
+.case-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:clamp(2.25rem,3.4vw,2.6rem)}   /* room for the paperclip above the report */
+.case-tabs:has(> :only-child){display:none}
+.case-tab{
+  min-height:44px;padding:.55rem 1.15rem;border-radius:999px;
+  background:var(--butter);color:var(--ink);border:1px solid var(--hairline);
+  font-family:var(--f-display);font-weight:800;font-size:.9375rem;transition:background .2s ease,color .2s ease;
+}
+.case-tab:hover{background:var(--butter-pop)}
+.case-tab[aria-selected="true"]{background:var(--edge);color:var(--ground);border-color:var(--edge)}
+/* the report: a white sheet of paper, size M, tilted a touch, with the hero's paperclip on its top edge */
+.report{
+  position:relative;display:grid;gap:clamp(1.25rem,3vw,2.75rem);align-items:center;
+  grid-template-columns:1fr;padding:clamp(1.25rem,3vw,2.5rem);
+  background:var(--card);color:var(--ink);border-radius:var(--r-lg);
+  border:1px solid var(--hairline-2);box-shadow:var(--shadow-lift);transform:rotate(-.7deg);
+}
+.report[hidden]{display:none}
+@media (min-width:760px){.report{grid-template-columns:auto 1fr}}
+.report .clip{right:clamp(1.5rem,7%,4.5rem);width:clamp(28px,3vw,40px);z-index:3}
+/* the video stands upright like a phone, sized by screen height so the section fits one laptop screen */
+.report-media{justify-self:center;width:min(260px,62vw,calc((100svh - 400px) * 9 / 16));min-width:150px}
+.report-media .slot{border-radius:var(--r-lg)}
+.report-media .slot-note{color:var(--ink-3)}
+.report-body{display:flex;flex-direction:column;gap:clamp(.8rem,1.6vw,1.15rem);min-width:0}
+.report-kicker{font-size:var(--t-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding-bottom:.6rem;border-bottom:1px solid var(--hairline)}
+.report h3{font-size:var(--t-h3);line-height:1.15}
+.report-brand{display:block;font-family:var(--f-mono);font-size:var(--t-mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.3rem}
+.report-story{display:grid;gap:.65rem;margin:0}
+.report-story div{display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem;align-items:baseline}
+.report-story dt{font-family:var(--f-display);font-weight:800;font-size:var(--t-small)}
+.report-story dd{margin:0;font-size:var(--t-small);line-height:1.55;color:var(--ink-2)}
+@media (max-width:480px){.report-story div{grid-template-columns:1fr;gap:.1rem}}
+/* the results, like the totals at the bottom of a printed report */
+.report-metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:0;border-top:1px solid var(--hairline);padding-top:clamp(.8rem,1.6vw,1.1rem)}
+.report-metrics div{display:flex;flex-direction:column-reverse;gap:.2rem;padding-inline:.25rem 0}
+.report-metrics div+div{border-left:1px solid var(--hairline);padding-left:clamp(.75rem,2vw,1.4rem)}
+.report-metrics dd{margin:0;font-family:var(--f-display);font-weight:900;font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.report-metrics dt{font-family:var(--f-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ============================================================
+   TESTIMONIALS — client quotes taped to the page (switch: "testimonials")
+   ============================================================ */
+.testimonials{overflow-x:clip}
+/* one sideways row: 3 cards in view on laptops, one + a peek on phones. Room above/below inside the row so the
+   tilts and tape aren't cut off by the scrolling box. 1–2 cards sit centred (auto margins). */
+.testi-rail{position:relative}
+.testi-row{
+  display:flex;gap:var(--card-gap);overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+  scroll-snap-type:x mandatory;padding:30px 8px 36px;margin:-30px -8px -36px;align-items:flex-start;
+}
+.testi-row::-webkit-scrollbar{display:none}
+.testi{
+  position:relative;margin:0;flex:none;width:calc((100% - 2 * var(--card-gap)) / 3);scroll-snap-align:start;
+  border-radius:var(--r-xl);padding:clamp(1.7rem,3vw,2.3rem) clamp(1.3rem,2.6vw,1.9rem) clamp(1.3rem,2.6vw,1.7rem);
+  display:flex;flex-direction:column;gap:1rem;border:1px solid var(--hairline-2);box-shadow:var(--shadow);
+  background:var(--blush-soft);color:var(--ink);
+  min-height:var(--testi-h,0px);   /* all cards as tall as the tallest (set by main.js); an opened "Read more" card grows past it */
+}
+.testi:first-child{margin-left:auto}
+.testi:last-child{margin-right:auto}
+@media (max-width:859px){.testi{width:min(82%,340px)}}
+.testi:nth-child(even){background:var(--butter-soft)}
+.testi:nth-child(3n+1){transform:rotate(-1.6deg)}
+.testi:nth-child(3n+2){transform:rotate(1.2deg) translateY(14px)}
+.testi:nth-child(3n){transform:rotate(-.8deg) translateY(4px)}
+.testi-tape{position:absolute;z-index:2;top:-16px;left:50%;width:36%;height:auto;translate:-50% 0;rotate:-3deg;pointer-events:none;filter:drop-shadow(0 1px 2px var(--cutout-shadow))}
+/* the quote area is 4 lines tall as standard: longer quotes stop after 4 lines with "Read more" (only shown when a
+   quote is cut off), shorter ones keep the same 4-line space so every card has the same rhythm */
+.testi blockquote{
+  margin:0;font-family:var(--f-display);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.4;letter-spacing:-.01em;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;
+  min-height:calc(4 * 1.4em);
+}
+.testi.open blockquote{display:block;-webkit-line-clamp:unset;line-clamp:none}
+.testi-more{
+  align-self:flex-start;min-height:44px;margin-block:-.6rem -.4rem;padding-inline:0;
+  font-family:var(--f-display);font-weight:800;font-size:.875rem;color:var(--ink);
+  text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--blush-pop);
+}
+.testi figcaption{display:flex;align-items:center;gap:.75rem;font-size:var(--t-small);line-height:1.35;margin-top:auto}
+.testi-avatar{width:42px;height:42px;border-radius:50%;flex:none;background:var(--ground-2);border:1.5px dashed color-mix(in srgb,var(--ink-3) 45%,transparent)}
+img.testi-avatar{object-fit:cover;border:0}
+/* no photo? put the client's initials inside the span: <span class="testi-avatar" aria-hidden="true">MR</span> */
+.testi-avatar{display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:.8125rem;letter-spacing:.02em;color:var(--on-blush)}
+.testi-avatar:not(:empty){border:0;background:var(--blush)}
+.testi-role{color:var(--ink-3)}
+/* arrows (laptops only — phones hide all ‹ › arrows) sit just outside the cards */
+.testi-rail .rail-prev{left:calc(-1 * clamp(.5rem,1.8vw,1.5rem))}
+.testi-rail .rail-next{right:calc(-1 * clamp(.5rem,1.8vw,1.5rem))}
+/* dots: how many reviews there are and which one you're at; only when the row scrolls */
+.testi-dots{display:flex;justify-content:center;gap:.5rem;margin-top:clamp(2.75rem,4.5vw,3.5rem);min-height:10px}   /* clear gap below the lowered middle card */
+.testi-dots span{width:8px;height:8px;border-radius:999px;background:color-mix(in srgb,var(--ink-3) 35%,transparent);transition:width .3s ease,background .3s ease}
+.testi-dots span.on{width:22px;background:var(--blush-pop)}
+
+/* ============================================================
+   PRICES on the offer cards (switch: "prices")
+   ============================================================ */
+/* inherits the card's text colour, so it also reads on the dark featured card */
+.offer-price{font-size:var(--t-small);color:inherit;opacity:.85;margin-top:-.2rem}
+.offer-price strong{font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:-.02em;color:inherit}
+
+/* ============================================================
+   FAQ — open-and-close questions (switch: "faq")
+   ============================================================ */
+.faq-card{max-width:52rem;margin-inline:auto;padding:clamp(1rem,3vw,2.25rem) clamp(1.25rem,3.5vw,2.75rem);border-radius:var(--r-xl);background:var(--butter-soft);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--hairline-2)}
+.faq-item{padding-block:.35rem}
+.faq-item:first-child{border-top:0}
+.faq-item summary{font-family:var(--f-display);font-weight:800;font-size:clamp(1rem,1.6vw,1.125rem);line-height:1.3;padding-block:.5rem}
+.faq-a{padding:.1rem 2.5rem .9rem 0}
+.faq-a p{font-size:var(--t-small);line-height:1.65;color:var(--ink-2)}
+.faq-sample{display:inline-block;margin-right:.35rem;padding:.1rem .45rem;border-radius:999px;background:var(--card);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);vertical-align:.1em}
+
+/* ============================================================
+   LEGAL PAGES — impressum.html, privacy.html (simple text pages in the same style)
+   ============================================================ */
+.legal{padding-block:clamp(2rem,6vw,4.5rem) var(--section-y)}
+.legal-card{
+  max-width:46rem;margin-inline:auto;padding:clamp(1.5rem,4.5vw,3.5rem);border-radius:var(--r-xl);
+  background:var(--butter-soft);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--hairline-2);
+  display:flex;flex-direction:column;gap:.9rem;
+}
+.legal-card h1{font-size:var(--t-h2);margin-top:.4rem}
+.legal-card h2{font-size:var(--t-h4);margin-top:1rem}
+.legal-card p{line-height:1.65;color:var(--ink-2)}
+.legal-card .legal-lead{font-size:var(--t-lead);color:var(--ink)}
+.legal-card a{color:var(--ink);text-underline-offset:3px}
+.legal-card .sec-tag{align-self:flex-start;margin:0}
+.legal-date{font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.1em;text-transform:uppercase;margin-top:1rem}
+/* footer: small legal links under the © line */
+.foot-legal{display:flex;gap:.4rem 1.25rem;flex-wrap:wrap}
+.foot-legal-links{display:inline-flex;gap:1rem}
+.foot-legal a{color:inherit;opacity:.75;text-underline-offset:3px}
+.foot-legal a:hover{opacity:1}
+
+/* ============================================================
+   SECTION SWITCHES — names listed in <body data-off="…"> are hidden (see the top of index.html)
+   ============================================================ */
+body[data-off~="hero"] [data-section="hero"],
+body[data-off~="logos"] [data-section="logos"],
+body[data-off~="work"] [data-section="work"],
+body[data-off~="cases"] [data-section="cases"],
+body[data-off~="proof"] [data-section="proof"],
+body[data-off~="about"] [data-section="about"],
+body[data-off~="gallery"] [data-section="gallery"],
+body[data-off~="testimonials"] [data-section="testimonials"],
+body[data-off~="offers"] [data-section="offers"],
+body[data-off~="contact"] [data-section="contact"],
+body[data-off~="footer"] [data-section="footer"],
+/* links to a hidden section go too, so nothing points at a section that isn't there */
+body[data-off~="work"] .hero .btn-pink,
+body[data-off~="work"] .foot-link[href="#work"],
+body[data-off~="offers"] .foot-link[href="#offer"],
+body[data-off~="contact"] .foot-link[href="#contact"],
+body[data-off~="work"] [data-nav="work"],
+body[data-off~="cases"] [data-nav="cases"],
+body[data-off~="about"] [data-nav="about"],
+body[data-off~="offers"] [data-nav="offers"],
+body[data-off~="faq"] [data-section="faq"],
+body[data-off~="prices"] [data-section="prices"],
+body[data-off~="tiktok"] [data-section="tiktok"],
+body[data-off~="youtube"] [data-section="youtube"],
+body[data-off~="linkedin"] [data-section="linkedin"],
+body[data-off~="legal"] [data-section="legal"]{display:none !important}
+/* without a hero, the first section still clears the sticky header normally */
+body[data-off~="hero"] main{padding-top:var(--inset)}
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   Small, scroll-driven (CSS only): things rise, settle or draw in as they enter the screen.
+   Browsers without support and reduced-motion users just see everything in place.
+   Ancestors must not use overflow:hidden/auto (use clip), or the animation tracks the wrong scroller.
+   ============================================================ */
+@keyframes rise{from{opacity:0;translate:0 40px}to{opacity:1;translate:0 var(--y,0)}}
+/* no fade here: photos and folders must never look washed out if scrolling stops mid-way */
+@keyframes settle{from{translate:0 60px;rotate:3deg}to{translate:0 0;rotate:0deg}}
+@keyframes draw{from{scale:0 1}to{scale:1 1}}
+@keyframes pop-in{from{opacity:0;scale:.94}to{opacity:1;scale:1}}
+@keyframes name-up{from{translate:0 45%}to{translate:0 0}}
+
+/* the hero highlight draws itself on load */
+.hero h1 em::after{transform-origin:left center}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 em::after{animation:draw .7s cubic-bezier(.2,.8,.2,1) .35s both}
+}
+
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    /* every section heading + lead rises in */
+    .sec-head{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+    /* folders drop onto the desk and settle into their tilt */
+    .file{animation:settle linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    /* stat cards rise one after another; the marker swipe draws behind each number */
+    .stat{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .stat:nth-child(2){animation-range:entry 10% cover 36%}
+    .stat:nth-child(3){animation-range:entry 20% cover 42%}
+    .stat-n::after{transform-origin:left center;animation:draw linear both;animation-timeline:view();animation-range:entry 60% cover 40%}
+    /* About: the card fades up, the taped photo swings into place */
+    .about-card{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .about-card .portrait-wrap{animation:settle linear both;animation-timeline:view();animation-range:entry 10% cover 35%}
+    /* offer cards rise in a wave; the middle one ends lower */
+    .offer{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .report,.testi,.logo-card,.faq-card{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .testi:nth-child(2){animation-range:entry 10% cover 36%}
+    .testi:nth-child(3){animation-range:entry 20% cover 42%}
+    .offer:nth-child(2){animation-range:entry 10% cover 36%}
+    .offer:nth-child(3){animation-range:entry 20% cover 42%}
+    .addons{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+    /* contact card grows in; its portrait swings in like the About one */
+    /* gallery: the whole dark card rises in (its photos sit in a sideways scroller) */
+    .mosaic-card{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+    .contact-card{animation:pop-in linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    .contact-shot{animation:settle linear both;animation-timeline:view();animation-range:entry 10% cover 35%}
+    /* footer: her name slides up out of the card's bottom edge */
+    .foot-name{animation:name-up linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+  }
+}
+
+/* short screens (small laptops): tighter folder and offer spacing so each section fits one screen */
+@media (min-width:760px) and (max-height:820px){
+  .folder{padding-top:clamp(1rem,3svh,2rem)}
+  .offer-img{aspect-ratio:2/1}
+  .proof-cta{margin-top:calc(1rem + 18px)}
+}
+
+/* "Get a quote" popup */
+.quote{
+  border:0;border-radius:var(--r-xl);padding:clamp(1.5rem,3.5vw,2.5rem);width:min(92vw,30rem);overflow:visible;
+  background:var(--card);color:var(--ink);box-shadow:var(--shadow-lift);text-align:center;
+}
+.quote::backdrop{background:var(--overlay)}
+.quote[open]{display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.quote .sec-tag{margin:0}
+.quote h3{font-size:var(--t-h3)}
+.quote-text{color:var(--ink-2);font-size:var(--t-small);line-height:1.6;max-width:36ch}
+.quote .mailbox{margin-top:.2rem;background:var(--butter-soft)}
+.quote .mail-link{color:inherit;font-weight:700;text-underline-offset:3px}
+.quote-hint{color:var(--ink-3)}
+.quote-hint strong{color:var(--ink)}
+
+/* ============================================================
+   SKELETON BUILD 2026-10-14 — link work cards, hero portrait
+   (uses existing variables only; no new colour values)
+   ============================================================ */
+.vcard-link{display:block;text-decoration:none;color:inherit}
+.vcard-watch{
+  display:block;margin-top:.35rem;
+  font-family:var(--f-mono);font-size:var(--t-mono);letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+}
+img.hero-portrait{object-position:50% 28%}
+/* the work folder has no filter tabs any more, so its top-left corner is rounded too */
+.folder{border-top-left-radius:var(--r-xl)}
+
+/* ---------- original shows: fan of covers per show ---------- */
+.shows-grid{display:grid;gap:calc(var(--card-gap) + 10px);grid-template-columns:1fr;margin-top:calc(var(--block) + 6px)}
+@media (min-width:860px){.shows-grid{grid-template-columns:repeat(3,1fr)}}
+.show-col{text-align:left}
+.fan{position:relative;height:315px;margin-bottom:1.1rem}
+.fan-card{position:absolute;bottom:0;width:57%;aspect-ratio:9/16;border-radius:var(--r-lg);overflow:hidden;border:3px solid var(--show-c,#fff);box-shadow:var(--shadow);display:block;background:var(--butter-soft);transition:transform .35s ease}
+.fan-card img{width:100%;height:100%;object-fit:cover;display:block}
+.fan-card .tag{top:8px;left:8px;font-size:.55rem;padding:.26rem .5rem}
+.fan-l{left:0;transform:rotate(-7deg);z-index:1}
+.fan-r{right:0;transform:rotate(7deg);z-index:1}
+.fan-c{left:50%;transform:translateX(-50%) rotate(-1deg);z-index:2;bottom:14px}
+.fan-card:hover{transform:rotate(0deg) translateY(-8px);z-index:5}
+.fan-c:hover{transform:translateX(-50%) rotate(0deg) translateY(-8px)}
+.show-col h3{font-family:var(--f-display);font-weight:800;font-size:1.35rem;line-height:1.15;letter-spacing:-.01em}
+.show-desc{color:var(--ink-2);line-height:1.5;margin-top:.35rem;max-width:32ch}
+.show-total{margin-top:.8rem;display:flex;flex-direction:column;gap:.15rem}
+.show-n{position:relative;z-index:0;align-self:flex-start;font-family:var(--f-display);font-weight:900;font-size:2rem;line-height:1;letter-spacing:-.03em}
+.show-n::after{content:"";position:absolute;left:-.06em;right:-.06em;bottom:.02em;height:.36em;z-index:-1;border-radius:3px;background:var(--show-c,var(--butter-pop));transform:rotate(-.8deg)}
+
+
+.show-meta{font-family:var(--f-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;opacity:.72}
+.shows-strip{margin-top:calc(var(--block) + 14px);text-align:center;background:var(--butter-soft);border-radius:var(--r-xl);padding:1.1rem 1.4rem;line-height:1.55}
+.shows-strip strong{font-family:var(--f-display);font-weight:800}
+
+.show-col{--show-c:var(--butter-pop)}
+.sc-clean{--show-c:var(--sky)}
+.sc-handy{--show-c:var(--blush-pop)}
+.sc-trailer{--show-c:var(--butter-pop)}
+.sc-clean .fan-card img{filter:saturate(1.07) contrast(1.02)}
+.sc-handy .fan-card img{filter:sepia(.2) saturate(1.06)}
+.sc-trailer .fan-card img{filter:saturate(1.18) contrast(1.05)}
+.fan-card .tag{background:var(--show-c);color:var(--ink)}
+.fan-sticker{position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-4deg);z-index:6;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;padding:.34rem .8rem;border-radius:999px;background:var(--show-c);color:var(--ink);border:2px solid #fff;box-shadow:var(--shadow);white-space:nowrap}
+.show-poster{display:block;border:3px solid var(--show-c);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:1.1rem;background:var(--butter-soft);transition:transform .35s ease}
+.show-poster img{display:block;width:100%;height:auto}
+.show-poster:hover{transform:translateY(-6px) rotate(-.5deg)}
+
+.site-nav a.nav-main{background:var(--sky);color:var(--ink);border-radius:999px;padding:.55rem 1.05rem;font-weight:700;text-decoration:none;box-shadow:var(--shadow);transition:transform .25s ease}
+.site-nav a.nav-main::after{display:none}
+.site-nav a.nav-main:hover{transform:translateY(-2px);color:var(--ink)}

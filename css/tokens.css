@@ -1,0 +1,122 @@
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  color-scheme: light;
+
+  /* ---- palette: paper + ink neutrals, two brand surfaces, two deep accents ----
+     Brand pastels (butter, blush) are SURFACES only — never text.
+     Text on them is ink, or the deep version of the same colour (ochre / berry). */
+  --ground:#FFFCF6;     /* paper: page background */
+  --ground-2:#F6F1E7;   /* paper, one step deeper: placeholders, quiet fills */
+  --card:#FFFFFF;
+
+  --ink:#1C1A1F;        /* all main text, buttons, footer */
+  --ink-2:#4D4852;      /* secondary text */
+  --ink-3:#6F6A72;      /* muted text (still 5:1 on paper) */
+  --edge:#1C1A1F;       /* dark surfaces: buttons, footer card, featured offer */
+
+  /* each brand colour comes in three strengths:
+     -soft  = toned down, for LARGE surfaces (cards, folders)
+     plain  = the brand colour itself, for small things (tags, pills)
+     -pop   = the saturated version, for highlights only (marker swipes, key buttons) */
+  /* "butter" now holds a soft cream / sand beige (swapped from yellow 2026-09-28 for a calmer, more chic feel;
+     the old yellows were #FFF8D9 / #FEF5AF / #FFE36E). The names stayed, so nothing else had to change. */
+  --butter-soft:#F8F2E4; --butter:#F0E6CF;  --butter-pop:#E8D8B2;
+  --on-butter:#3A2F22;   --butter-deep:#6E5A40;   /* text on cream / warm brown */
+  --blush-soft:#FFEEF5;  --blush:#FFD8EA;   --blush-pop:#FFB8D9;
+  --on-blush:#3D0F24;    --blush-deep:#9E2A5E;    /* text on blush / berry */
+
+  /* sky accent — added 2026-10-14 at her request (#2FA8DC). Accent only:
+     backgrounds, tags and marker swipes. Text ON it is ink (6.4:1);
+     never use it as text on paper (only 2.6:1, fails AA). */
+  --sky:#2FA8DC;  --sky-soft:#E3F4FB;  --on-sky:#1C1A1F;
+
+  /* the spec work folder: cream, tabs a step deeper */
+  --folder:#F8F2E4;     --folder-tab:#F1E8D4;  --folder-tab-2:#E8DCC2;  --folder-edge:#D8C7A4;
+  --on-folder:#3A2F22;
+  --folder-shine:rgba(255,255,255,.75);
+
+  /* brand-card palette: identical in light and dark mode (not overridden below).
+     Coloured cards re-point --ink, --card, --edge… at these so they look the same in both themes. */
+  --brand-ink:#1C1A1F; --brand-ink-2:#4D4852; --brand-ink-3:#6F6A72;
+  --brand-paper:#FFFCF6; --brand-paper-2:#F6F1E7; --brand-card:#FFFFFF;
+  --brand-hairline:rgba(28,26,31,.12); --brand-hairline-2:rgba(28,26,31,.07);
+
+  --hairline:rgba(28,26,31,.12);
+  --hairline-2:rgba(28,26,31,.07);
+  --shadow:0 18px 40px -28px rgba(28,26,31,.5);
+  --shadow-lift:0 28px 60px -30px rgba(28,26,31,.45);
+
+  --ok:#1E7A52;         /* the one functional colour: "open for bookings" dot, copied state */
+  --clip:#A7ABB5;    --clip-hi:#F4F5F8;  --clip-shadow:rgba(28,26,31,.28);
+  --cutout-shadow:rgba(28,26,31,.22);
+  /* washi tape (drawn in CSS): slightly see-through cream paper, its creases and fibres — same in both themes */
+  --tape:rgba(246,241,238,.93); --tape-crease:rgba(255,255,255,.22); --tape-fibre:rgba(120,100,90,.035);
+  --on-photo:#FFFFFF;  --scrim:rgba(12,10,18,.26);
+  --scrub-track:rgba(255,255,255,.35); --scrub-fill:#FFFFFF;   /* video timeline over footage: same in both themes */
+  --overlay:rgba(20,18,24,.86);  /* behind the enlarged gallery photo */
+  --foot-name:#FFD8EA; /* blush on the ink footer */
+
+  /* type */
+  --f-display:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --t-display:clamp(2.55rem,7.4vw,4.6rem);
+  --t-h2:clamp(1.7rem,3.2vw,2.5rem);
+  --t-h3:clamp(1.25rem,2.4vw,1.6rem);
+  --t-h4:1.0625rem;
+  --t-stat:clamp(2.5rem,6vw,3.6rem);
+  --t-lead:clamp(1.0625rem,1.55vw,1.2rem);
+  --t-body:1rem;
+  --t-small:.875rem;
+  --t-mono:.6875rem;
+
+  /* layout */
+  --max:1280px;
+  --gutter:clamp(1.25rem,4.5vw,2.75rem);
+  --section-y:clamp(3.75rem,8.5vw,7rem);
+  --block:clamp(1.75rem,3.2vw,2.75rem);
+  --bleed:clamp(3.5rem,9vw,8.5rem);
+  --folder-bleed:clamp(1.25rem,3.5vw,3rem);
+  --card-gap:clamp(.9rem,2vw,1.25rem);   /* space between cards in every row: videos, stats, gallery, offers */
+  /* card sizes — every card snaps to one of three widths:
+     L = full width minus --inset on each side   (hero, footer)
+     M = the page column, i.e. inside .wrap      (spec work folder, About, contact)
+     S = a third of the page column              (stat cards, offer cards, gallery photos) */
+  --inset:clamp(.75rem,2vw,1.5rem);
+  --r-sm:10px; --r-md:16px; --r-lg:22px; --r-xl:30px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#141216; --ground-2:#1E1B21; --card:#1E1B21;
+    --ink:#F7F2EC; --ink-2:#C2BAC0; --ink-3:#9A9298;
+    --edge:#F7F2EC;
+    --hairline:rgba(247,242,236,.16);
+    --hairline-2:rgba(247,242,236,.08);
+    --shadow:0 18px 40px -28px rgba(0,0,0,.9);
+    --shadow-lift:0 28px 60px -30px rgba(0,0,0,.85);
+    --ok:#5BD79B;
+    --clip:#8E929C;    --clip-hi:#DDE0E6; --clip-shadow:rgba(0,0,0,.6);
+    --cutout-shadow:rgba(0,0,0,.55);
+    --on-photo:#FFFFFF; --scrim:rgba(0,0,0,.34); --overlay:rgba(0,0,0,.86);
+    --foot-name:#1C1A1F;  /* dark name on the inverted (light) footer */
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#141216; --ground-2:#1E1B21; --card:#1E1B21;
+  --ink:#F7F2EC; --ink-2:#C2BAC0; --ink-3:#9A9298;
+  --edge:#F7F2EC;
+  --hairline:rgba(247,242,236,.16);
+  --hairline-2:rgba(247,242,236,.08);
+  --shadow:0 18px 40px -28px rgba(0,0,0,.9);
+  --shadow-lift:0 28px 60px -30px rgba(0,0,0,.85);
+  --ok:#5BD79B;
+  --clip:#8E929C;    --clip-hi:#DDE0E6; --clip-shadow:rgba(0,0,0,.6);
+  --cutout-shadow:rgba(0,0,0,.55);
+  --on-photo:#FFFFFF; --scrim:rgba(0,0,0,.34); --overlay:rgba(0,0,0,.86);
+  --foot-name:#1C1A1F;  /* dark name on the inverted (light) footer */
+}

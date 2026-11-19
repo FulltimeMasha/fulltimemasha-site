@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/miami", "destination": "/", "permanent": true },
+    { "source": "/portfolio", "destination": "/branddeal", "permanent": true }
+  ]
+}
