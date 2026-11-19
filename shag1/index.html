@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ШАГ 01 · Пусть AI думает как CEO твоей жизни — Fulltime Masha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFCF6; --ink:#1C1A1F; --blush:#FFD8EA; --pop:#FFB8D9;
+    --soft:#FFEEF5; --butter:#FCFADE; --butter-deep:#F3EAD3; --muted:#7A7280;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'PT Sans',sans-serif;font-size:18px;line-height:1.55;}
+  .page{overflow:hidden;position:relative;}
+  .wrap{max-width:860px;margin:0 auto;padding:44px 22px 72px;position:relative;}
+  .blob{position:absolute;border-radius:50%;z-index:0;}
+  .blob-pink{width:320px;height:320px;background:var(--blush);top:-170px;right:-140px;}
+  .backlink{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;}
+  .backlink:hover{text-decoration:underline;}
+  .kicker{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:30px;}
+  h1{position:relative;z-index:1;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(30px,5.4vw,50px);line-height:1.12;margin-top:16px;}
+  .hl{background:var(--blush);padding:0 10px;border-radius:8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .tagline{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:16px;margin-top:16px;}
+  .box{position:relative;z-index:1;border:2px solid var(--ink);border-radius:18px;padding:28px 26px;margin-top:34px;background:#fff;}
+  .box.butter{background:var(--butter);}
+  .box h2{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(21px,3.4vw,27px);line-height:1.25;}
+  .box p{margin-top:12px;font-size:17px;}
+  .box .mark{background:var(--butter-deep);padding:0 5px;border-radius:4px;}
+  .box .mark-pink{background:var(--blush);padding:0 5px;border-radius:4px;}
+  .steps{margin-top:16px;display:flex;flex-direction:column;gap:14px;}
+  .step{display:flex;gap:14px;align-items:flex-start;}
+  .num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--pop);border:2px solid var(--ink);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;}
+  .step p{margin:0;padding-top:6px;}
+  .note{margin-top:16px;color:var(--muted);font-size:15px;}
+  .btn{display:inline-block;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:16px;letter-spacing:.05em;text-decoration:none;color:var(--ink);background:var(--pop);border:2px solid var(--ink);border-radius:999px;padding:15px 30px;transition:transform .12s ease, background .12s ease;}
+  .btn:hover{background:var(--blush);transform:translateY(-2px);}
+  .btn.ghost{background:#fff;}
+  .dl{text-align:center;}
+  .dl .btn{margin-top:18px;}
+  .gift{text-align:center;}
+  .gift .btn{margin-top:18px;}
+  .sign{font-family:'IBM Plex Mono',monospace;font-size:14px;margin-top:16px;}
+  .sign .pink{color:#E77CA8;}
+  footer{position:relative;z-index:1;margin-top:44px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;}
+  @media (max-width:720px){
+    .wrap{padding:34px 16px 56px;}
+    .hl{white-space:normal;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+  <div class="blob blob-pink"></div>
+
+  <a class="backlink" href="/shagi">← все шаги</a>
+
+  <div class="kicker">ШАГ 01 · бесплатный промпт</div>
+  <h1>Пусть AI (Claude) думает <span class="hl">как CEO</span> твоей жизни</h1>
+  <div class="tagline">из каши — в план</div>
+
+  <div class="box butter">
+    <h2>🧠 Мой успешный год</h2>
+    <p>Один промпт, который узнаёт, как устроена твоя голова, превращает цели в план из маленьких шагов и даёт тебе ИИ, который <span class="mark">уже знает тебя</span> в каждом следующем чате.</p>
+  </div>
+
+  <div class="box">
+    <h2>👉🏻 Как пользоваться · 3 шага</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><p>Скачай файл ниже 👇</p></div>
+      <div class="step"><div class="num">2</div><p>Открой <b>claude.ai</b> → создай <b>новый Проект</b> (назови его «Мой успешный год»)</p></div>
+      <div class="step"><div class="num">3</div><p>Открой чат в этом проекте, <b><span class="mark-pink">прикрепи файл и просто нажми «отправить»</span></b>. Дальше Claude всё сделает сам 💌</p></div>
+    </div>
+    <p class="note">займёт около часа · отвечай честно · можно уйти и вернуться в тот же чат в любой момент · Claude сам спросит, на каком языке говорить</p>
+  </div>
+
+  <div class="box dl">
+    <h2>📄 Файл промпта</h2>
+    <p>«Мой успешный год» — полный промпт в PDF, 34 страницы. Скачай и прикрепи в свой проект в Claude.</p>
+    <a class="btn" href="https://www.dropbox.com/scl/fi/42ejoco6ca598mmpqgo0f/Moy_Uspeshny_God_Prompt_RU_v2.pdf?rlkey=m549mzje6mh01bmt111km81x6&st=89eig3ue&dl=1" target="_blank" rel="noopener">Скачать PDF →</a>
+  </div>
+
+  <div class="box butter gift">
+    <h2>🎁 Бесплатный Трекер Целей 🎁</h2>
+    <p>Куда складывать цели из промпта: большие цели, маленькие подцели и прогресс, который считается сам. Трекер живёт в Notion — забери его себе бесплатно:</p>
+    <a class="btn ghost" href="https://the-success-brain.notion.site/SMART-3ffc7f35440f80e39efcc6bc7b35c9f0" target="_blank" rel="noopener">Забрать трекер →</a>
+  </div>
+
+  <div class="box">
+    <h2>💌 Что дальше?</h2>
+    <p>Success Brain — это только <b>Шаг 01</b>. Я показываю каждый шаг на пути к онлайн-доходу, чтобы наша семья переехала жить на парусную лодку ⛵. Подписывайся на <b>@fulltimemasharu</b>, чтобы не пропустить Шаг 02.</p>
+    <div class="sign"><b>xx Маша</b> · <span class="pink">live a little braver</span></div>
+  </div>
+
+  <footer>FulltimeMasha · шаг 01</footer>
+
+</div>
+</div>
+</body>
+</html>
