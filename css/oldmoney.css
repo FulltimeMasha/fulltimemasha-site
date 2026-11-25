@@ -109,6 +109,19 @@
   .ugc-site .poster-views{font-size:2rem}
   .ugc-site .poster-meta{font-size:.8rem}
 }
+/* Shows fix (25.11): the img width/height attributes act as a CSS height:1067px hint —
+   without height:auto it overrides aspect-ratio and stretches photos into tall strips.
+   Frame is now a fixed 4:5, height fully auto; equal grid columns via minmax(0,1fr). */
+.ugc-site .shows-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ugc-site .poster-photo{height:auto;aspect-ratio:4/5;flex:none}
+.ugc-site .sc-clean .poster-photo{object-position:50% 50%}
+.ugc-site .sc-handy .poster-photo{object-position:62% 50%}
+.ugc-site .sc-trailer .poster-photo{object-position:50% 45%}
+@media (max-width:859px){
+  .ugc-site .poster-info{padding:.6rem .35rem 0}
+  .ugc-site .poster-name{font-size:.78rem;line-height:1.2}
+  .ugc-site .poster-sub{font-size:.72rem;line-height:1.4}
+}
 /* Handwritten note under the pricing — Ms Madi, like a note in the diary margin */
 .ugc-site .pkg-note{font-family:"Ms Madi",cursive;font-size:clamp(1.55rem,3vw,2rem);line-height:1.25;color:var(--blush-deep)}
 .ugc-site .pkg-note strong{font-weight:400;text-decoration:underline;text-decoration-color:var(--blush);text-decoration-thickness:2px;text-underline-offset:4px}
