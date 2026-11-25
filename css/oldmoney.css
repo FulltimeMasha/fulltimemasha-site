@@ -90,6 +90,29 @@
 .ugc-site .foot-name{font-weight:600;letter-spacing:-.02em}
 .ugc-site .poster-views{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0}
 .ugc-site .faq-item summary{font-weight:600}
+/* Shows: three compact icon cards — all three visible at once, no poster images (Masha, 25.11) */
+.ugc-site .shows-grid{grid-template-columns:repeat(3,1fr);gap:.65rem}
+.ugc-site .poster{padding:1rem .55rem 1.05rem;align-items:center;text-align:center;border-width:2px;background:var(--card)}
+.ugc-site .poster-icon{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--blush-soft);margin-bottom:.1rem}
+.ugc-site .poster-icon svg{width:38px;height:38px;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ugc-site .poster-icon .ic-accent{stroke:var(--blush-deep)}
+.ugc-site .poster-info{padding:.5rem .05rem 0;gap:.4rem;align-items:center}
+.ugc-site .poster-name{font-family:var(--f-display);font-weight:600;font-size:1.08rem;line-height:1.15;letter-spacing:-.01em}
+.ugc-site .poster-sub{font-size:.76rem;line-height:1.45}
+.ugc-site .poster-foot{flex-direction:column;align-items:center;gap:.08rem;margin-top:.3rem}
+.ugc-site .poster-views{font-size:1.55rem}
+.ugc-site .poster-meta{font-size:.7rem}
+@media (min-width:860px){
+  .ugc-site .shows-grid{gap:calc(var(--card-gap) + 10px)}
+  .ugc-site .poster{padding:1.5rem 1.15rem 1.6rem}
+  .ugc-site .poster-icon{width:84px;height:84px}
+  .ugc-site .poster-icon svg{width:50px;height:50px}
+  .ugc-site .poster-info{padding:.8rem .2rem 0;gap:.55rem}
+  .ugc-site .poster-name{font-size:1.5rem}
+  .ugc-site .poster-sub{font-size:.9rem}
+  .ugc-site .poster-views{font-size:2rem}
+  .ugc-site .poster-meta{font-size:.8rem}
+}
 /* Handwritten note under the pricing — Ms Madi, like a note in the diary margin */
 .ugc-site .pkg-note{font-family:"Ms Madi",cursive;font-size:clamp(1.55rem,3vw,2rem);line-height:1.25;color:var(--blush-deep)}
 .ugc-site .pkg-note strong{font-weight:400;text-decoration:underline;text-decoration-color:var(--blush);text-decoration-thickness:2px;text-underline-offset:4px}
