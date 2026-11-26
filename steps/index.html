@@ -6,14 +6,14 @@
 <title>Steal My Steps — Fulltime Masha</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Instrument+Sans:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#FFFCF6; --ink:#1C1A1F; --blush:#FFD8EA; --pop:#FFB8D9;
     --soft:#FFEEF5; --butter:#FCFADE; --butter-deep:#F3EAD3; --muted:#7A7280;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--paper);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:18px;line-height:1.55;}
+  body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-size:18px;line-height:1.6;}
   .page{overflow:hidden;position:relative;}
   .wrap{max-width:1060px;margin:0 auto;padding:48px 22px 72px;position:relative;}
   .hero{position:relative;padding:26px 0 6px;}
@@ -24,32 +24,32 @@
   .hero-text{flex:1 1 460px;}
   .hero-photo{flex:0 0 300px;}
   .hero-photo img{width:100%;display:block;}
-  .kicker{font-family:'DM Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;}
+  .kicker{font-family:'Jost',sans-serif;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;}
   .kicker .dot{color:#E77CA8;}
-  .sub{font-family:'DM Mono',monospace;font-size:14px;letter-spacing:.16em;color:var(--muted);margin-top:12px;}
-  .hero-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(29px,4.6vw,50px);line-height:1.14;margin-top:22px;}
+  .sub{font-family:'Jost',sans-serif;font-size:14px;letter-spacing:.16em;color:var(--muted);margin-top:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(29px,4.6vw,50px);line-height:1.14;margin-top:22px;}
   .hl{background:var(--blush);padding:0 10px;border-radius:8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;white-space:nowrap;}
   .tags{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;}
-  .tag-pill{background:var(--soft);border-radius:999px;padding:9px 18px;font-family:'DM Mono',monospace;font-size:14px;font-weight:700;}
-  .sec-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:clamp(30px,5vw,44px);line-height:1.1;margin-top:64px;position:relative;z-index:1;}
+  .tag-pill{background:var(--soft);border-radius:999px;padding:9px 18px;font-family:'Jost',sans-serif;font-size:14px;font-weight:700;}
+  .sec-title{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(30px,5vw,44px);line-height:1.1;margin-top:64px;position:relative;z-index:1;}
   .sec-title .hl2{background:var(--blush);padding:0 10px;border-radius:8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
   .intro{max-width:720px;margin-top:26px;position:relative;z-index:1;}
   .intro .save{background:var(--butter);border:1.5px solid var(--ink);border-radius:14px;padding:18px 20px;}
   .intro .save b{background:var(--blush);padding:0 5px;border-radius:4px;}
   .intro p{margin-top:16px;}
   .howto{margin-top:20px;font-size:17px;position:relative;z-index:1;}
-  .howto .sig{font-family:'DM Mono',monospace;font-size:14px;margin-top:10px;}
+  .howto .sig{font-family:'Jost',sans-serif;font-size:14px;margin-top:10px;}
   .cards-img{display:flex;flex-wrap:wrap;gap:22px;margin-top:40px;position:relative;z-index:1;}
   .cards-img .pic{flex:1 1 400px;display:block;}
   .cards-img img{width:100%;height:auto;display:block;border-radius:16px;}
   a.pic img{transition:transform .15s ease;}
   a.pic:hover img{transform:translateY(-3px);}
   .thanks{margin-top:52px;border:2px solid var(--ink);border-radius:18px;background:#fff;padding:30px 28px;position:relative;z-index:1;}
-  .thanks h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:24px;margin-bottom:12px;}
+  .thanks h3{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;margin-bottom:12px;}
   .thanks p{max-width:680px;}
-  .thanks .mail{display:inline-block;margin-top:14px;font-family:'DM Mono',monospace;font-weight:700;color:var(--ink);background:var(--blush);padding:2px 8px;border-radius:5px;text-decoration:none;}
-  .thanks .sign{margin-top:18px;font-family:'DM Mono',monospace;font-size:14px;}
-  footer{margin-top:40px;text-align:center;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;position:relative;z-index:1;}
+  .thanks .mail{display:inline-block;margin-top:14px;font-family:'Jost',sans-serif;font-weight:700;color:var(--ink);background:var(--blush);padding:2px 8px;border-radius:5px;text-decoration:none;}
+  .thanks .sign{margin-top:18px;font-family:'Jost',sans-serif;font-size:14px;}
+  footer{margin-top:40px;text-align:center;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;position:relative;z-index:1;}
   @media (max-width:720px){
     .wrap{padding:36px 16px 56px;}
     .hero-photo{flex:1 1 100%;text-align:center;}
@@ -59,6 +59,7 @@
     .cards-img .pic{flex-basis:100%;}
     .hl{white-space:normal;}
   }
+.hl{font-style:italic;}
 </style>
 </head>
 <body>
